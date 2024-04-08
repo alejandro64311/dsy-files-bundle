@@ -1,0 +1,35 @@
+parameters:
+    aws.class: Aws\Common\Aws
+
+services:
+    dsarhoya.files:
+        class:  dsarhoya\DSYFilesBundle\Services\DSYFilesService
+        arguments: 
+            - '%dsarhoya_dsy_files.s3.credentials%'
+            - '%dsarhoya_dsy_files.s3.named_credentials%'
+            - '%kernel.cache_dir%'
+            - '%dsarhoya_dsy_files.storage_type%'
+            - "@request_stack"
+    dsarhoya\DSYFilesBundle\Services\DSYFilesService: "@dsarhoya.files"
+
+    dsarhoya.files.listener.uploadFile:
+        class: dsarhoya\DSYFilesBundle\Listener\UploadFileListener
+        arguments:  ['@dsarhoya.files', '%dsarhoya_dsy_files.storage_type%']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist}
+            - { name: doctrine.event_listener, event: preUpdate}
+            - { name: doctrine.event_listener, event: preRemove}
+    dsarhoya\DSYFilesBundle\Listener\UploadFileListener: "@dsarhoya.files.listener.uploadFile"
+
+    dsarhoya.files.twig_extensions:
+        class: dsarhoya\DSYFilesBundle\Twig\TwigFileExtensions
+        arguments:  ['@dsarhoya.files']
+        tags:
+              - { name: twig.extension }
+    dsarhoya\DSYFilesBundle\Twig\TwigFileExtensions: "@dsarhoya.files.twig_extensions"
+
+    dsarhoya.files.file_type_extension:
+        class: dsarhoya\DSYFilesBundle\Form\Extension\FileTypeExtension
+        tags:
+            - { name: form.type_extension, alias: file, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
+    dsarhoya\DSYFilesBundle\Form\Extension\FileTypeExtension: "@dsarhoya.files.file_type_extension"

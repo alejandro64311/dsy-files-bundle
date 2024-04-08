@@ -1,0 +1,4 @@
+*.php~
+/vendor
+*.cache
+composer.lock

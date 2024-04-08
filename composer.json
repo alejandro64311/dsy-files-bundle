@@ -1,0 +1,17 @@
+{
+    "name": "dsarhoya/dsy-files-bundle",
+    "autoload": {
+        "psr-0": {
+            "dsarhoya\\DSYFilesBundle": ""
+        }
+    },
+    "require": {
+        "aws/aws-sdk-php": "^3.3.0"
+    },
+    "require-dev": {
+        "symfony/symfony": "^2.8 || ^3.4",
+        "doctrine/orm": "^2.4 || ^2.5"
+    },
+    "description": "Bundle with files upload/download functions",
+    "target-dir": "dsarhoya/DSYFilesBundle"
+}

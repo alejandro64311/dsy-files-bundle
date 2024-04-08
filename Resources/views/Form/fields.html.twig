@@ -1,0 +1,12 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block file_widget %}
+    {% apply spaceless %}
+    {% include "@dsarhoyaDSYFiles/Form/fields.partials.html.twig" %}
+    <div class="row">
+        <div class="col-md-12">
+            {{ block('form_widget') }}
+        </div>
+    </div>
+    {% endapply %}
+{% endblock %}

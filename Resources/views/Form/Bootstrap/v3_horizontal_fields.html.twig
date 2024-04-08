@@ -1,0 +1,20 @@
+{% extends 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block file_widget %}
+    {% apply spaceless %}
+    <div class="row">
+        {% if file_path_and_key is not null and valid and form.parent.vars.valid %}
+            <div class="col-md-4">
+                {% if is_image %}
+                    <img class="automatic-file-preview" src="{{fileUrl(file_path_and_key, file_url_options)}}"/>
+                {% else %}
+                    <a class="automatic-file-preview" href="{{fileUrl(file_path_and_key, file_url_options)}}" target="_blank"/>Descargar</a>
+                {% endif %}
+            </div>
+        {% endif %}
+        <div class="col-md-{{file_path_and_key is not null ? '8':'12'}}">
+            {{ block('form_widget') }}
+        </div>
+    </div>
+    {% endapply %}
+{% endblock %}
